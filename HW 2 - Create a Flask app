@@ -1,0 +1,14 @@
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello, welcome to My Flask App!"
+
+@app.route("/about")
+def about():
+    return "Hi! I'm Hiiro, and this is my basic Flask app."
+
+if __name__ == "__main__":
+    app.run(debug=True)
