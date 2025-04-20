@@ -1,0 +1,26 @@
+from flask import Flask,render_template,request
+
+add=Flask(__name__)
+
+FORTUNES = {
+    "red": {1: "You will have a lucky day!", 2: "Adventure is coming!", 3: "Expect good news!", 4: "Today is full of surprises!"},
+    "yellow": {1: "A new opportunity is on the horizon!", 2: "Happiness is around the corner!", 3: "Your creativity will shine!", 4: "Someone will brighten your day!"},
+    "blue": {1: "Stay calm—good things are coming!", 2: "A pleasant surprise awaits!", 3: "Your patience will be rewarded!", 4: "A mystery will soon be solved!"},
+    "green": {1: "Nature will inspire you!", 2: "A fresh start is coming!", 3: "You will make an important connection!", 4: "Success is in your future!"}
+}
+
+@app.route("/", methods=["GET"])
+def home():
+    return render_template("index.html")
+
+@app.route("/fortune", methods=["POST"])
+def fortune():
+    name = request.form.get("user")
+    color = request.form.get("color")
+    number = int(request.form.get("number"))
+
+    fortune_text = FORTUNES.get(color, {}).get(number, "An unknown future awaits!")
+    return render_template("fortune.html", name=name, fortune=fortune_text)
+
+if __name__ == "__main__":
+    app.run(debug=True)
