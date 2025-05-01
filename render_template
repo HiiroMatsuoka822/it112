@@ -1,0 +1,20 @@
+from flask import Flask, request, render_template
+
+app = Flask(__name__)
+
+@app.route('/fortune', methods=['GET', 'POST'])
+def fortune():
+    if request.method == 'POST':
+        user_name = request.form.get('user')
+        color = request.form.get('color')
+        number = request.form.get('number')
+        fortunes = {
+            ("red", "1"): "You will come up with a brilliant idea today!",
+            ("yellow", "2"): "Luck is supporting you today.",
+            ("blue", "3"): "Relaxation is important for you today.",
+            ("green", "4"): "Expect a new encounter!"
+        }
+        fortune_result = fortunes.get((color, number), "Your future is unknown…")
+        return render_template('fortune.html', user_name=user_name, fortune_result=fortune_result)
+
+    return render_template('fortune.html')
