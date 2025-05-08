@@ -1,0 +1,44 @@
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///items.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class VideoGame(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(100), nullable=False)
+    genre = db.Column(db.String(50), nullable=False)
+    release_year = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'<VideoGame {self.title}>'
+    
+with app.app_context():
+    db.create_all()
+    if not VideoGame.query.first():
+        games = [
+            VideoGame(title="The Legend of Zelda", genre="Action-Adventure", release_year=1986),
+            VideoGame(title="Super Mario Bros.", genre="Platformer", release_year=1985),
+            VideoGame(title="Minecraft", genre="Sandbox", release_year=2011),
+        ]
+        db.session.add_all(games)
+        db.session.commit()
+
+
+@app.route('/games')
+def show_games():
+    games = VideoGame.query.all()
+    return render_template('games.html', games=games)
+
+@app.route('/game/<int:game_id>')
+def game_detail(game_id):
+    game = VideoGame.query.get_or_404(game_id)
+    return render_template('game_detail.html', game=game)
+
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
+
