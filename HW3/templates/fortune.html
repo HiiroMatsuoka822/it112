@@ -1,16 +1,36 @@
-<form method="POST" action="/fortune">
-    <input type="text" name="user">
-    <select name="color">
-        <option>red</option>
-        <option>yellow</option>
-        <option>blue</option>
-        <option>green</option>
-    </select>
-    <select name="number">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-    </select>
-    <button>submit</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Fortune</title>
+</head>
+<body>
+    <h1>Your Fortune</h1>
+    <form method="POST" action="/">
+        <label for="user">Name:</label>
+        <input type="text" name="user"><br><br>
+
+        <label for="color">Favorite Color:</label>
+        <select name="color">
+            <option>red</option>
+            <option>yellow</option>
+            <option>blue</option>
+            <option>green</option>
+        </select><br><br>
+
+        <label for="number">Favorite Number:</label>
+        <select name="number">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select><br><br>
+
+        <button>Submit</button>
+    </form>
+
+    {% if result %}
+    <h2>Submission Result</h2>
+    <p>{{ result }}</p>
+    {% endif %}
+</body>
+</html>
