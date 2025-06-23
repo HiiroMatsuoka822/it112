@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hiiro's Django App</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    {% if user_name %}
+        <h1>Hi, {{ user_name }}! 👋</h1>
+    {% else %}
+        <h1>Welcome to Hiiro's Django App!🐶</h1>
+    {% endif %}
+
+    <img src="{% static 'images/dog.jpg' %}" alt="Home Image">
+</body>
+</html>
